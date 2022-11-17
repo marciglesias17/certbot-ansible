@@ -1,6 +1,14 @@
 # certbot-ansible
 
-Playbook example
+A basic ansible role to deploy SSL certificates with DNS validation, with CloudFlare or AWS.
+
+Everything you need to know to configure the role.
+
+AWS Route53 DNS:
+https://certbot-dns-route53.readthedocs.io/en/stable/
+
+CloudFlare DNS:
+https://certbot-dns-cloudflare.readthedocs.io/en/stable/
 
 
 # Requirements
@@ -8,6 +16,7 @@ Playbook example
 - ansible < 2.13.6
 
 
+Playbook example.yml
 ```
 - hosts: test
   roles: 
