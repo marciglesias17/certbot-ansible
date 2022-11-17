@@ -1,0 +1,25 @@
+- name: Install packages
+  become: yes
+  apt:
+    pkg:
+      - certbot
+      - python3-certbot-dns-cloudflare
+    state: latest
+    update_cache: true
+
+- name: Generate credencials file Cloudflare
+  ansible.builtin.template:
+    src: .cloudflare.ini.j2
+    dest: ~/.cloudflare.ini
+    mode: '0400'
+
+- name: Generate certificate of letsencrypt with Cloudflare DNS
+  ansible.builtin.command: certbot certonly --dns-cloudflare --dns-cloudflare-credentials {{ certbot_cloudflare_credentials }} -d '{{ certbot_certificate_domain }}' -m {{ certbot_letsencrypt_email }} --agree-tos -n
+
+- name: Add crontab to renew certbot SSL automally
+  ansible.builtin.cron:
+    name: "Renew Certbot SSL Cloudflare"
+    weekday: "*"
+    minute: "30"
+    hour: "*"
+    job: "certbot renew --quiet --no-self-upgrade --dns-cloudflare"

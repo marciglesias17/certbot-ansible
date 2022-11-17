@@ -1,0 +1,33 @@
+- name: Install packages
+  become: yes
+  apt:
+    pkg:
+      - certbot
+      - python3-certbot-dns-route53
+    state: latest
+    update_cache: true
+    
+- name: Create dir aws
+  become: yes
+  ansible.builtin.file:
+    path: /root/.aws/
+    state: directory
+
+- name: Generate credencials file AWS
+  become: yes
+  ansible.builtin.template:
+    src: .aws.ini.j2
+    dest: /root/.aws/config
+    mode: '0400'
+
+- name: Generate certificate of letsencrypt with AWS DNS
+  become: yes
+  ansible.builtin.command: certbot certonly --dns-route53 -d '{{ certbot_certificate_domain }}' -m {{ certbot_letsencrypt_email }} --agree-tos -n
+
+- name: Add crontab to renew certbot SSL automally
+  ansible.builtin.cron:
+    name: "Renew Certbot SSL AWS"
+    weekday: "*"
+    minute: "30"
+    hour: "*"
+    job: "certbot renew --quiet --no-self-upgrade --dns-route53"

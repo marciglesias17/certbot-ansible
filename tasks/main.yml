@@ -1,0 +1,5 @@
+- include: cloudflare.yml
+  when: certbot_certificate_method == "cloudflare"
+
+- include: aws.yml
+  when: certbot_certificate_method == "aws"

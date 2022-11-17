@@ -1,0 +1,9 @@
+certbot_cloudflare_credentials: "~/.cloudflare.ini"
+certbot_aws_credentials: "~/.aws/config"
+certbot_letsencrypt_email: "hello@example.com"
+certbot_certificate_method: "cloudflare"
+#certbot_cloudflare_api_key: ""
+#certbot_certificate_domain: ""
+
+#certbot_aws_access_key: ""
+#certbot_aws_access_key_id: ""
