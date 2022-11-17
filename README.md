@@ -2,6 +2,12 @@
 
 Playbook example
 
+
+# Requirements
+
+- ansible < 2.13.6
+
+
 ```
 - hosts: test
   roles: 
